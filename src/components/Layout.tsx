@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from "react";
-import { PoweroffOutlined } from "@ant-design/icons";
 import { Layout as AntLayout, Breadcrumb, Button, Menu, theme } from "antd";
+import { AiOutlinePoweroff } from "react-icons/ai";
 // import { signOut } from "next-auth/react";
 import { Flex } from "./shared/Flex";
 import { NAVIGATIONS } from "../const/navigations";
@@ -46,7 +46,7 @@ const Layout: FC<{ children: ReactNode; title?: string }> = ({
           <Box px={1} mb={3}>
             <Button danger type="primary" block onClick={handleLogout}>
               <Flex alignItems={"center"} justifyContent={"center"}>
-                <PoweroffOutlined />
+                <AiOutlinePoweroff />
                 <Box ml={2}>Logout</Box>
               </Flex>
             </Button>

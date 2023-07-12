@@ -7,6 +7,8 @@ import { useParams, useSearchParams } from "next/navigation";
 import FilterTab, { IBrand } from "../../components/products/FilterTab";
 import { useRouter } from "next/router";
 import { NextPageContext } from "next";
+import { Text } from "../../components/shared/Text";
+import ProductCards from "../../components/products/ProductCards";
 
 export default function Products({ query }: any) {
   const router = useRouter();
@@ -22,6 +24,7 @@ export default function Products({ query }: any) {
     fire: getProducts,
     loading: isLoading,
     data,
+    status,
   } = useFetch(
     category
       ? `${apiUrl}/products/category/${category}?limit=${limit}&skip=${skip}`
@@ -60,10 +63,15 @@ export default function Products({ query }: any) {
   }, [page, search, category]);
 
   return (
-    <Layout>
+    <Layout title="Product List">
       <Box>
         <FilterTab categories={categoriesData || []} brands={brandData || []} />
-        <TableComponent data={data || []} loading={isLoading} />
+        <Box mt={3} display={["none", "block"]}>
+          <TableComponent data={data || []} loading={isLoading} />
+        </Box>
+        <Box mt={3} display={["block", "none"]}>
+          <ProductCards data={data || []} loading={isLoading} />
+        </Box>
       </Box>
     </Layout>
   );

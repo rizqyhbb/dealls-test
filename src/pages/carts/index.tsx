@@ -32,7 +32,7 @@ export default function Carts({ query }: any) {
   }, [page]);
 
   return (
-    <Layout>
+    <Layout title="Cart List">
       <Box>
         <TableComponent data={data || []} />
       </Box>

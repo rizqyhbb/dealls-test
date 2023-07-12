@@ -1,7 +1,6 @@
 import React from "react";
 import { Box } from "../shared/Box";
 import { Button, Table } from "antd";
-import { Text } from "../shared/Text";
 import { useRouter } from "next/router";
 
 export const TableComponent = ({ data }: any) => {
@@ -57,6 +56,7 @@ export const TableComponent = ({ data }: any) => {
       <Table
         dataSource={data.carts}
         columns={columns}
+        rowKey={(rec) => rec.id}
         pagination={{
           total: data.total,
           showSizeChanger: false,

@@ -30,7 +30,7 @@ export default function DetaiLCart({ query }: any) {
             <Text>User ID: {data?.userId}</Text>
           </Box>
 
-          <Grid gridTemplateColumns={"1fr 1fr"}>
+          <Grid gridTemplateColumns={"1fr 1fr"} gridGap={3}>
             {data?.products.map((product, idx) => (
               <Card key={product.id}>
                 <Text>Item no {idx + 1}</Text>

@@ -1,22 +1,22 @@
 import {
-  BarChartOutlined,
-  ShoppingCartOutlined,
-  SkinOutlined,
-} from "@ant-design/icons";
+  AiOutlineBarChart,
+  AiOutlineShoppingCart,
+  AiOutlineSkin,
+} from "react-icons/ai";
 
 export const NAVIGATIONS = [
   {
-    icon: BarChartOutlined,
+    icon: AiOutlineBarChart,
     label: "Dashboard",
     link: "/dashboard",
   },
   {
-    icon: SkinOutlined,
+    icon: AiOutlineSkin,
     label: "Products",
     link: "/products",
   },
   {
-    icon: ShoppingCartOutlined,
+    icon: AiOutlineShoppingCart,
     label: "Carts",
     link: "/carts",
   },

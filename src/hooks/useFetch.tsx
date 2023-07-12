@@ -15,7 +15,7 @@ interface FetchResult<T> {
 }
 
 export const useFetch = (url: string, options: FetchOptions = {}) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [error, setError] = useState<any>(null);
   const [status, setStatus] = useState<
@@ -31,14 +31,15 @@ export const useFetch = (url: string, options: FetchOptions = {}) => {
       if (response.ok) {
         setData(jsonData);
         setStatus("success");
+        setLoading(false);
       } else {
         setError(jsonData);
         setStatus("error");
+        setLoading(false);
       }
     } catch (error) {
       setError(error);
       setStatus("error");
-    } finally {
       setLoading(false);
     }
   };
