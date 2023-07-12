@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
-import { color, typography } from "styled-system";
+import { ColorProps, TypographyProps, color, typography } from "styled-system";
 
-export const Text = styled.p`
+interface IText extends TypographyProps, ColorProps {}
+export const Text = styled.p<IText>`
+  margin: 4px;
   ${typography}
   ${color}
 `;

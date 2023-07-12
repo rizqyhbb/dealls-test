@@ -6,10 +6,14 @@ import { Flex } from "./shared/Flex";
 import { NAVIGATIONS } from "../const/navigations";
 import { Box } from "./shared/Box";
 import { useRouter } from "next/router";
+import { Text } from "./shared/Text";
 
 const { Header, Content, Footer, Sider } = AntLayout;
 
-const Layout: FC<{ children: ReactNode }> = ({ children }) => {
+const Layout: FC<{ children: ReactNode; title?: string }> = ({
+  children,
+  title,
+}) => {
   const router = useRouter();
   const {
     token: { colorBgContainer },
@@ -52,6 +56,9 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
       <AntLayout>
         <Header style={{ padding: 0, background: colorBgContainer }}></Header>
         <Content style={{ margin: "24px 16px 0", overflow: "auto" }}>
+          <Text color="black" fontSize={3} fontWeight={"bold"}>
+            {title}
+          </Text>
           <Box
             p={24}
             minHeight={"100%"}
