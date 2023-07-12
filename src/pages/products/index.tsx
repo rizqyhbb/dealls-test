@@ -26,6 +26,7 @@ const Products = () => {
           onPageChange={(page) => {
             setSkip((page - 1) * limit);
           }}
+          currentPage={skip + limit / limit}
         />
       </Box>
     </Layout>

@@ -53,17 +53,26 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
       <AntLayout>
         <Header style={{ padding: 0, background: colorBgContainer }}></Header>
         <Content style={{ margin: "24px 16px 0", overflow: "auto" }}>
-          <div
-            style={{
-              padding: 24,
-              minHeight: "100%",
-              background: colorBgContainer,
-            }}
+          <Box
+            p={24}
+            minHeight={"100%"}
+            bg={colorBgContainer}
+            overflowX={"auto"}
           >
             {children}
-          </div>
+          </Box>
         </Content>
-        <Footer style={{ textAlign: "center" }}>Dealls! Frontend test</Footer>
+        <Footer
+          style={{
+            textAlign: "center",
+            display: "flex",
+            justifyContent: "center",
+            height: "20px",
+            alignItems: "center",
+          }}
+        >
+          <Box>Dealls! Frontend test</Box>
+        </Footer>
       </AntLayout>
     </AntLayout>
   );
