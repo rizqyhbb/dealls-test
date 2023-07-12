@@ -2,16 +2,15 @@ import React, { FC, ReactNode } from "react";
 import { PoweroffOutlined } from "@ant-design/icons";
 import { Layout as AntLayout, Breadcrumb, Button, Menu, theme } from "antd";
 // import { signOut } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
 import { Flex } from "./shared/Flex";
 import { NAVIGATIONS } from "../const/navigations";
 import { Box } from "./shared/Box";
+import { useRouter } from "next/router";
 
 const { Header, Content, Footer, Sider } = AntLayout;
 
 const Layout: FC<{ children: ReactNode }> = ({ children }) => {
   const router = useRouter();
-  const pathname = usePathname();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -32,7 +31,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
           <Menu
             theme="dark"
             mode="inline"
-            selectedKeys={[pathname]}
+            selectedKeys={[router.pathname]}
             items={NAVIGATIONS.map((value) => ({
               key: value.link,
               icon: React.createElement(value.icon),
@@ -62,17 +61,6 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
             {children}
           </Box>
         </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-            display: "flex",
-            justifyContent: "center",
-            height: "20px",
-            alignItems: "center",
-          }}
-        >
-          <Box>Dealls! Frontend test</Box>
-        </Footer>
       </AntLayout>
     </AntLayout>
   );

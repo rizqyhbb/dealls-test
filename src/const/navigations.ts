@@ -18,6 +18,6 @@ export const NAVIGATIONS = [
   {
     icon: ShoppingCartOutlined,
     label: "Carts",
-    link: "/cart",
+    link: "/carts",
   },
 ];
