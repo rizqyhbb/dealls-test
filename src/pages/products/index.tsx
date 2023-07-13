@@ -12,6 +12,18 @@ import { IProduct, productsAtom } from "../../context/productContext";
 import axios, { AxiosError } from "axios";
 import { NextPageContext } from "next";
 
+export interface IBrands {
+  products: IProductOnBrands[];
+  total: number;
+  skip: number;
+  limit: number;
+}
+
+export interface IProductOnBrands {
+  id: number;
+  brand: string;
+}
+
 export default function Products({ query }: any) {
   const router = useRouter();
   const params = useSearchParams();
@@ -27,13 +39,13 @@ export default function Products({ query }: any) {
     fire: getCategories,
     loading: loadingCategories,
     data: categoriesData,
-  } = useFetch(`${apiUrl}/products/categories`);
+  } = useFetch<string[]>(`${apiUrl}/products/categories`);
 
   const {
     fire: getBrand,
     loading: loadingBrand,
-    data: brandData,
-  } = useFetch(`${apiUrl}/products?limit=0&skip=0&select=brand`);
+    data: brands,
+  } = useFetch<IBrands>(`${apiUrl}/products?limit=0&skip=0&select=brand`);
 
   const getProductsData = async ({
     search = "",
@@ -74,7 +86,6 @@ export default function Products({ query }: any) {
       }
 
       if (price?.maxPrice && price?.maxPrice !== 0) {
-        console.log(price);
         newProducts = newProducts.filter(
           (product) =>
             product.price >= price.minPrice && product.price <= price.maxPrice
@@ -111,17 +122,13 @@ export default function Products({ query }: any) {
   }, [query]);
 
   useEffect(() => {
-    console.log({ minPrice, maxPrice });
     getProductsData({ search, category, brand, price: { minPrice, maxPrice } });
   }, [search, category, brand, minPrice, maxPrice]);
 
   return (
     <Layout title="Product List">
       <Box>
-        <FilterTab
-          categories={(categoriesData as string[]) || []}
-          brands={(brandData as any) || []}
-        />
+        <FilterTab categories={categoriesData!} brands={brands!} />
         <Box mt={3} display={["none", "block"]}>
           <TableComponent />
         </Box>

@@ -7,16 +7,33 @@ import { Tag } from "antd";
 import { TbDiscount2, TbStarFilled } from "react-icons/tb";
 import { useAtom } from "jotai";
 import { productsAtom } from "../../context/productContext";
+import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
+import { CardSkeleton } from "./CardSkeleton";
+import { Pagination } from "../shared/Pagination";
 
 interface OwnProps extends TableComponentProps {}
 const ProductCards: FC<OwnProps> = () => {
+  const router = useRouter();
+  const params = useSearchParams();
+  const page = Number(params.get("page"));
   const [data, setData] = useAtom(productsAtom);
+
+  const firstRow = (page - 1) * data.limit;
+  const lastRow = firstRow + data.limit;
+
   if (data.loading) {
-    return <p>Loading</p>;
+    return (
+      <>
+        {Array.from(Array(10).keys()).map((arr) => (
+          <CardSkeleton key={arr} />
+        ))}
+      </>
+    );
   }
   return (
     <>
-      {data.products.map((product) => (
+      {data.products.slice(firstRow, lastRow).map((product) => (
         <Card key={product.id}>
           <Tag color="success" bordered={false}>
             ID {product.id}
@@ -50,6 +67,19 @@ const ProductCards: FC<OwnProps> = () => {
           <Text>{product.description}</Text>
         </Card>
       ))}
+      <Flex justifyContent={"center"} alignItems={"center"}>
+        <Pagination
+          onPageChange={(page) => {
+            router.push({
+              pathname: router.pathname,
+              query: { ...router.query, page },
+            });
+          }}
+          currentPage={page}
+          total={data.total}
+          size={data.limit}
+        />
+      </Flex>
     </>
   );
 };

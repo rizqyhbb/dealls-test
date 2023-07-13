@@ -6,21 +6,16 @@ import { useSearchParams } from "next/navigation";
 import PriceSlider from "./PriceSlider";
 import { Text } from "../shared/Text";
 import { Box } from "../shared/Box";
+import { Grid } from "../shared/Grid";
+import { produce } from "immer";
+import { IBrands } from "../../pages/products";
 
-export interface IBrand {
-  id: number;
-  brand: string;
-}
-
-interface IProducts {
-  products: IBrand[];
-}
-interface IFilterTab {
+interface OwnProps {
   categories: string[];
-  brands: IProducts | [];
+  brands: IBrands;
 }
 
-const FilterTab: FC<IFilterTab> = ({ categories, brands = [] }) => {
+const FilterTab: FC<OwnProps> = ({ categories, brands }) => {
   const router = useRouter();
   const params = useSearchParams();
   const minPrice = params.get("min_price");
@@ -65,30 +60,22 @@ const FilterTab: FC<IFilterTab> = ({ categories, brands = [] }) => {
     });
   };
 
-  const options = categories.sort().map((category) => ({
+  const options = categories?.sort().map((category) => ({
     value: category,
     label: category,
   }));
 
-  // handle this with useEffect ==========
-  const brandsAsArray =
-    brands &&
-    (brands as IProducts).products &&
-    Array.from(
-      new Set((brands as IProducts).products?.map((prod) => prod.brand))
-    );
+  const brandsAsArray = Array.from(
+    new Set(brands?.products?.map((prod) => prod.brand))
+  );
 
-  const brandOptions: any =
-    brandsAsArray &&
-    brandsAsArray.length > 0 &&
-    brandsAsArray.map((prod) => ({
-      value: prod,
-      label: prod.toUpperCase(),
-    }));
-  // handle this with useEffect ==========
+  const brandOptions = brandsAsArray.map((prod) => ({
+    value: prod,
+    label: prod.toUpperCase(),
+  }));
 
   return (
-    <Flex>
+    <Flex flexDirection={["column", "row"]}>
       <Box width={"100%"}>
         <Text fontStyle={"italic"} color={"grey"}>
           Search product
@@ -100,34 +87,38 @@ const FilterTab: FC<IFilterTab> = ({ categories, brands = [] }) => {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </Box>
-      <Box ml={2}>
-        <Text fontStyle={"italic"} color={"grey"}>
-          Filter by brand
-        </Text>
-        <Select
-          allowClear
-          value={params.get("brand") || undefined}
-          style={{ width: "200px" }}
-          options={brandOptions}
-          placeholder={"No filter"}
-          onChange={handleSelectBrand}
-        />
-      </Box>
 
-      <Box ml={2}>
-        <Text fontStyle={"italic"} color={"grey"}>
-          Filter by category
-        </Text>
-        <Select
-          allowClear
-          value={params.get("category") || undefined}
-          style={{ width: "200px" }}
-          options={options}
-          placeholder={"No filter"}
-          onChange={handleSelectCategory}
-        />
-      </Box>
-      <Box ml={2} minWidth={120}>
+      <Grid gridTemplateColumns={"1fr 1fr"} gridGap={[3, 0]}>
+        <Box ml={[0, 2]} width={["100%", 140]}>
+          <Text fontStyle={"italic"} color={"grey"}>
+            Filter by brand
+          </Text>
+          <Select
+            allowClear
+            value={params.get("brand") || undefined}
+            style={{ width: "100%" }}
+            options={brandOptions}
+            placeholder={"No filter"}
+            onChange={handleSelectBrand}
+          />
+        </Box>
+
+        <Box ml={[0, 2]} width={["100%", 140]}>
+          <Text fontStyle={"italic"} color={"grey"}>
+            Filter by category
+          </Text>
+          <Select
+            allowClear
+            style={{ width: "100%" }}
+            value={params.get("category") || undefined}
+            options={options}
+            placeholder={"No filter"}
+            onChange={handleSelectCategory}
+          />
+        </Box>
+      </Grid>
+
+      <Box ml={[0, 2]} minWidth={120}>
         <Text fontStyle={"italic"} color={"grey"}>
           Filter by price
         </Text>

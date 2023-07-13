@@ -2,8 +2,9 @@ import React from "react";
 import { Box } from "../shared/Box";
 import { Button, Table } from "antd";
 import { useRouter } from "next/router";
+import { ICarts } from "../../pages/carts";
 
-export const TableComponent = ({ data }: any) => {
+export const TableComponent = ({ data }: { data: ICarts }) => {
   const router = useRouter();
   const columns = [
     {

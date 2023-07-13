@@ -6,43 +6,42 @@ interface FetchOptions {
   headers?: HeadersInit;
 }
 
-interface FetchResult {
+interface FetchResult<T> {
   loading: boolean;
-  data: unknown;
+  data: T | null;
   error: any;
   status: "idle" | "loading" | "success" | "error";
   fire: () => Promise<void>;
 }
 
-export const useFetch = (
+export const useFetch = <T>(
   url: string,
   options: FetchOptions = {}
-): FetchResult => {
+): FetchResult<T> => {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<any>(null);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
 
-  const fire = async () => {
+  const fire = async (): Promise<void> => {
     try {
       setLoading(true);
       const response = await fetch(url, options);
-      const jsonData = await response.json();
+      const jsonData: T = await response.json();
 
       if (response.ok) {
         setData(jsonData);
         setStatus("success");
-        setLoading(false);
       } else {
         setError(jsonData);
         setStatus("error");
-        setLoading(false);
       }
     } catch (error) {
       setError(error);
       setStatus("error");
+    } finally {
       setLoading(false);
     }
   };
