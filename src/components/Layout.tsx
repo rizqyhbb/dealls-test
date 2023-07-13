@@ -20,7 +20,7 @@ const Layout: FC<{ children: ReactNode; title?: string }> = ({
   } = theme.useToken();
 
   const handleLogout = () => {
-    // signOut();
+    router.push("/signout");
   };
 
   return (

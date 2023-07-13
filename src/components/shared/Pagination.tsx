@@ -17,8 +17,6 @@ export const Pagination = ({
 }) => {
   const pageCount = Math.ceil(total / size);
 
-  console.log(pageCount);
-
   return (
     <Flex>
       {pageCount > 0 && (

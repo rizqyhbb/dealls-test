@@ -11,24 +11,30 @@ interface FetchResult<T> {
   data: T | null;
   error: any;
   status: "idle" | "loading" | "success" | "error";
-  fire: () => Promise<void>;
+  fire: (options?: FetchOptions) => Promise<void>;
 }
 
 export const useFetch = <T>(
   url: string,
   options: FetchOptions = {}
 ): FetchResult<T> => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<any>(null);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
 
-  const fire = async (): Promise<void> => {
+  const fire = async (fireOptions?: FetchOptions): Promise<void> => {
+    const fetchOptions = {
+      ...options,
+      ...fireOptions,
+    };
+
     try {
+      setStatus("idle");
       setLoading(true);
-      const response = await fetch(url, options);
+      const response = await fetch(url, fetchOptions);
       const jsonData: T = await response.json();
 
       if (response.ok) {

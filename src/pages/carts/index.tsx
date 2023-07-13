@@ -41,9 +41,11 @@ export default function Carts({ query }: any) {
   const skip = limit * (page - 1);
   const apiUrl = process.env.NEXT_PUBLIC_API;
 
-  const { fire: getCarts, data } = useFetch<ICarts>(
-    `${apiUrl}/carts?limit=${limit}&skip=${skip}`
-  );
+  const {
+    fire: getCarts,
+    data,
+    loading,
+  } = useFetch<ICarts>(`${apiUrl}/carts?limit=${limit}&skip=${skip}`);
 
   useEffect(() => {
     if (query.page) return;
@@ -60,7 +62,7 @@ export default function Carts({ query }: any) {
   return (
     <Layout title="Cart List">
       <Box>
-        <TableComponent data={data!} />
+        <TableComponent data={data!} loading={loading} />
       </Box>
     </Layout>
   );

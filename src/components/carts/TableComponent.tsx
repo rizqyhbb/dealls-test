@@ -4,7 +4,13 @@ import { Button, Table } from "antd";
 import { useRouter } from "next/router";
 import { ICarts } from "../../pages/carts";
 
-export const TableComponent = ({ data }: { data: ICarts }) => {
+export const TableComponent = ({
+  data,
+  loading,
+}: {
+  data: ICarts;
+  loading: boolean;
+}) => {
   const router = useRouter();
   const columns = [
     {
@@ -55,11 +61,12 @@ export const TableComponent = ({ data }: { data: ICarts }) => {
   return (
     <Box>
       <Table
-        dataSource={data.carts}
+        loading={loading}
+        dataSource={data?.carts}
         columns={columns}
         rowKey={(rec) => rec.id}
         pagination={{
-          total: data.total,
+          total: data?.total,
           showSizeChanger: false,
           onChange: (page) => {
             router.push({
