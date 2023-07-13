@@ -11,13 +11,13 @@ export interface IBrand {
   id: number;
   brand: string;
 }
+
+interface IProducts {
+  products: IBrand[];
+}
 interface IFilterTab {
   categories: string[];
-  brands:
-    | {
-        products: IBrand[];
-      }
-    | [];
+  brands: IProducts | [];
 }
 
 const FilterTab: FC<IFilterTab> = ({ categories, brands = [] }) => {
@@ -73,10 +73,12 @@ const FilterTab: FC<IFilterTab> = ({ categories, brands = [] }) => {
   // handle this with useEffect ==========
   const brandsAsArray =
     brands &&
-    brands.products &&
-    Array.from(new Set(brands?.products?.map((prod) => prod.brand)));
+    (brands as IProducts).products &&
+    Array.from(
+      new Set((brands as IProducts).products?.map((prod) => prod.brand))
+    );
 
-  const brandOptions =
+  const brandOptions: any =
     brandsAsArray &&
     brandsAsArray.length > 0 &&
     brandsAsArray.map((prod) => ({

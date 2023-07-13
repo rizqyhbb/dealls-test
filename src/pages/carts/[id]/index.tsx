@@ -27,11 +27,11 @@ export default function DetaiLCart({ query }: any) {
         <Box>
           <Box bg={"grey"} px={3} width={"fit-content"} borderRadius={"4px"}>
             <Text>Cart ID: {query.id}</Text>
-            <Text>User ID: {data?.userId}</Text>
+            <Text>User ID: {(data as any).userId}</Text>
           </Box>
 
           <Grid gridTemplateColumns={"1fr 1fr"} gridGap={3}>
-            {data?.products.map((product, idx) => (
+            {(data as any)?.products.map((product: any, idx: number) => (
               <Card key={product.id}>
                 <Text>Item no {idx + 1}</Text>
                 <Text fontWeight={"bold"}>{product.title}</Text>
@@ -67,29 +67,29 @@ export default function DetaiLCart({ query }: any) {
             <Grid gridTemplateColumns={"1fr 1fr"}>
               <Text fontWeight={"bold"}>Total products</Text>
               <Text textAlign={"end"} fontWeight={"bold"}>
-                {data?.totalProducts}
+                {(data as any)?.totalProducts}
               </Text>
 
               <Text fontWeight={"bold"}>Total quantity</Text>
               <Text textAlign={"end"} fontWeight={"bold"}>
-                {data?.totalQuantity}
+                {(data as any)?.totalQuantity}
               </Text>
 
               <Text fontWeight={"bold"}>Total price</Text>
               <Text textAlign={"end"} fontWeight={"bold"} color={"red"}>
-                ${data?.total}
+                ${(data as any)?.total}
               </Text>
 
               <Text fontWeight={"bold"}>Total discount</Text>
               <Text textAlign={"end"} fontWeight={"bold"} color={"green"}>
-                ${data?.total - data?.discountedTotal}
+                ${(data as any)?.total - (data as any)?.discountedTotal}
               </Text>
             </Grid>
             <Box width={"100%"} height={"1px"} bg={"grey"} my={2} />
             <Grid gridTemplateColumns={"1fr 1fr"}>
               <Text fontWeight={"bold"}>FINAL PRICE</Text>
               <Text textAlign={"end"} fontWeight={"bold"} color={"green"}>
-                ${data?.discountedTotal}
+                ${(data as any)?.discountedTotal}
               </Text>
             </Grid>
           </Card>

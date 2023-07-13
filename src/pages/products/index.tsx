@@ -12,7 +12,7 @@ import { IProduct, productsAtom } from "../../context/productContext";
 import axios, { AxiosError } from "axios";
 import { NextPageContext } from "next";
 
-export default function Products({ query }) {
+export default function Products({ query }: any) {
   const router = useRouter();
   const params = useSearchParams();
   const search = params.get("search");
@@ -118,7 +118,10 @@ export default function Products({ query }) {
   return (
     <Layout title="Product List">
       <Box>
-        <FilterTab categories={categoriesData || []} brands={brandData || []} />
+        <FilterTab
+          categories={(categoriesData as string[]) || []}
+          brands={(brandData as any) || []}
+        />
         <Box mt={3} display={["none", "block"]}>
           <TableComponent />
         </Box>

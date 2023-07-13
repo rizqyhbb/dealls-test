@@ -11,6 +11,7 @@ export interface IProduct {
   stock: number;
   thumbnail: string;
   title: string;
+  discountPercentage: number;
 }
 
 export interface IResponse {
