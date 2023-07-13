@@ -1,25 +1,22 @@
 import { Table, Tag } from "antd";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Box } from "../shared/Box";
 import { useRouter } from "next/router";
 import { Text } from "../shared/Text";
 import { TbDiscount2 } from "react-icons/tb";
 import { Flex } from "../shared/Flex";
+import { useAtom } from "jotai";
+import { productsAtom } from "../../context/productContext";
 
 interface IProduct {
   [key: string]: string;
 }
 
-export interface OwnProps {
-  data: {
-    products: IProduct[] | [];
-    total: number;
-  };
-  loading: boolean;
-}
+export interface OwnProps {}
 
-export const TableComponent: FC<OwnProps> = ({ data, loading }) => {
+export const TableComponent: FC<OwnProps> = () => {
   const router = useRouter();
+  const [data, setData] = useAtom(productsAtom);
 
   const columns = [
     {
@@ -30,7 +27,7 @@ export const TableComponent: FC<OwnProps> = ({ data, loading }) => {
     {
       title: "Product",
       key: "id",
-      render: (val) => {
+      render: (val: IProduct) => {
         return (
           <Box>
             <Text fontWeight={"bold"}>{val.title}</Text>
@@ -50,7 +47,7 @@ export const TableComponent: FC<OwnProps> = ({ data, loading }) => {
     {
       title: "Price",
       key: "id",
-      render: (val) => {
+      render: (val: IProduct) => {
         return (
           <Box>
             <Text fontWeight={"bold"} textAlign={"end"}>
@@ -82,9 +79,10 @@ export const TableComponent: FC<OwnProps> = ({ data, loading }) => {
     <Table
       dataSource={data.products}
       columns={columns}
-      loading={loading}
+      loading={data.loading}
       rowKey={(rec) => rec.id}
       pagination={{
+        pageSize: 10,
         total: data.total,
         showSizeChanger: false,
         onChange: (page) => {

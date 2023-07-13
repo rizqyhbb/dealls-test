@@ -5,11 +5,13 @@ import { Text } from "../shared/Text";
 import { Flex } from "../shared/Flex";
 import { Tag } from "antd";
 import { TbDiscount2, TbStarFilled } from "react-icons/tb";
+import { useAtom } from "jotai";
+import { productsAtom } from "../../context/productContext";
 
 interface OwnProps extends TableComponentProps {}
-const ProductCards: FC<OwnProps> = ({ data, loading }) => {
-  console.log(data, loading);
-  if (loading) {
+const ProductCards: FC<OwnProps> = () => {
+  const [data, setData] = useAtom(productsAtom);
+  if (data.loading) {
     return <p>Loading</p>;
   }
   return (

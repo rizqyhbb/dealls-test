@@ -6,15 +6,18 @@ interface FetchOptions {
   headers?: HeadersInit;
 }
 
-interface FetchResult<T> {
+interface FetchResult {
   loading: boolean;
-  data: T | null;
+  data: unknown;
   error: any;
   status: "idle" | "loading" | "success" | "error";
   fire: () => Promise<void>;
 }
 
-export const useFetch = (url: string, options: FetchOptions = {}) => {
+export const useFetch = (
+  url: string,
+  options: FetchOptions = {}
+): FetchResult => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState(null);
   const [error, setError] = useState<any>(null);
