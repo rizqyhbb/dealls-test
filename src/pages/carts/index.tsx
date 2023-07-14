@@ -60,10 +60,8 @@ export default function Carts({ query }: any) {
   }, [page]);
 
   return (
-    <Layout title="Cart List">
-      <Box>
-        <TableComponent data={data!} loading={loading} />
-      </Box>
+    <Layout title="Cart List" journey={[{ title: "Carts" }]}>
+      <TableComponent data={data!} loading={loading} />
     </Layout>
   );
 }

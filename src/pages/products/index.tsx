@@ -126,7 +126,7 @@ export default function Products({ query }: any) {
   }, [search, category, brand, minPrice, maxPrice]);
 
   return (
-    <Layout title="Product List">
+    <Layout title="Product List" journey={[{ title: "Products" }]}>
       <Box>
         <FilterTab categories={categoriesData!} brands={brands!} />
         <Box mt={3} display={["none", "block"]}>

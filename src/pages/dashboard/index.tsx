@@ -78,7 +78,7 @@ const Dashboard = () => {
     `#${Math.floor(Math.random() * (16777216 + num)).toString(16)}`;
 
   return (
-    <Layout title="Dashboard">
+    <Layout title="Dashboard" journey={[{ title: "Dashboard" }]}>
       {loading || productCategoryLoading ? (
         <Text>Loading...</Text>
       ) : (

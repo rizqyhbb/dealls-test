@@ -10,10 +10,18 @@ import { Text } from "./shared/Text";
 
 const { Header, Content, Footer, Sider } = AntLayout;
 
-const Layout: FC<{ children: ReactNode; title?: string }> = ({
-  children,
-  title,
-}) => {
+interface ILayout {
+  children: ReactNode;
+  title?: string;
+  journey?: IJourney[];
+}
+
+interface IJourney {
+  href?: string;
+  title: string;
+}
+
+const Layout: FC<ILayout> = ({ children, title, journey }) => {
   const router = useRouter();
   const {
     token: { colorBgContainer },
@@ -22,6 +30,7 @@ const Layout: FC<{ children: ReactNode; title?: string }> = ({
   const handleLogout = () => {
     router.push("/signout");
   };
+  const currentPath = router.pathname.split("/")[1].split("?")[0];
 
   return (
     <AntLayout style={{ height: "100vh" }}>
@@ -35,7 +44,7 @@ const Layout: FC<{ children: ReactNode; title?: string }> = ({
           <Menu
             theme="dark"
             mode="inline"
-            selectedKeys={[router.pathname]}
+            selectedKeys={[`/${currentPath}`]}
             items={NAVIGATIONS.map((value) => ({
               key: value.link,
               icon: React.createElement(value.icon),
@@ -54,7 +63,11 @@ const Layout: FC<{ children: ReactNode; title?: string }> = ({
         </Flex>
       </Sider>
       <AntLayout>
-        <Header style={{ padding: 0, background: colorBgContainer }}></Header>
+        <Header style={{ padding: 0, background: colorBgContainer }}>
+          {/* <Flex alignItems={"center"} height={"100%"} ml={3}>
+            <Breadcrumb items={journey} />
+          </Flex> */}
+        </Header>
         <Content
           style={{
             margin: "24px 16px 0",
@@ -65,12 +78,7 @@ const Layout: FC<{ children: ReactNode; title?: string }> = ({
           <Text color="black" fontSize={3} fontWeight={"bold"}>
             {title}
           </Text>
-          <Box
-            p={24}
-            minHeight={"100%"}
-            // bg={colorBgContainer}
-            overflowX={"auto"}
-          >
+          <Box p={24} minHeight={"100%"} overflowX={"auto"}>
             {children}
           </Box>
         </Content>

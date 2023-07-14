@@ -41,7 +41,10 @@ export default function DetaiLCart({ query }: any) {
   }, []);
 
   return (
-    <Layout title="Cart Detail">
+    <Layout
+      title="Cart Detail"
+      journey={[{ title: "Carts", href: "/carts" }, { title: "Cart Detail" }]}
+    >
       {loading ? (
         <Grid gridTemplateColumns={["1fr", "1fr 1fr"]} gridGap={3}>
           {Array.from(Array(10).keys()).map((val) => {

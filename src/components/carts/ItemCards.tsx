@@ -5,6 +5,8 @@ import { Card } from "../shared/Card";
 import { Text } from "../shared/Text";
 import { Flex } from "../shared/Flex";
 import { Box } from "../shared/Box";
+import { Tag } from "antd";
+import { TbDiscount2 } from "react-icons/tb";
 
 const ItemCards = ({ data }: { data: ICartData }) => {
   return (
@@ -12,7 +14,9 @@ const ItemCards = ({ data }: { data: ICartData }) => {
       <Grid gridTemplateColumns={["1fr", "1fr 1fr"]} gridGap={3}>
         {data?.products.map((product: IProduct, idx: number) => (
           <Card key={product.id}>
-            <Text>Item no {idx + 1}</Text>
+            <Tag bordered={false} color="orange">
+              Item no {idx + 1}
+            </Tag>
             <Text fontWeight={"bold"}>{product.title}</Text>
             <Flex justifyContent={"space-between"}>
               <Flex>
@@ -26,9 +30,12 @@ const ItemCards = ({ data }: { data: ICartData }) => {
               <Flex>
                 <Text>Discount</Text>
               </Flex>
-              <Text fontWeight={"bold"} color={"green"}>
-                {product.discountPercentage}%
-              </Text>
+              <Flex alignItems={"center"}>
+                <TbDiscount2 color="green" size={20} />
+                <Text fontWeight={"bold"} color={"green"}>
+                  {product.discountPercentage}%
+                </Text>
+              </Flex>
             </Flex>
             <Box width={"100%"} height={"1px"} bg={"grey"} my={2} />
             <Flex justifyContent={"space-between"}>
