@@ -90,6 +90,15 @@ const Dashboard = () => {
               <Bar
                 options={{
                   responsive: true,
+                  plugins: {
+                    legend: {
+                      display: false,
+                    },
+                    title: {
+                      display: true,
+                      text: category.toUpperCase(),
+                    },
+                  },
                 }}
                 data={{
                   datasets: [
