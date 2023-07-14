@@ -55,7 +55,11 @@ export default function Signin() {
   return (
     <>
       {contextHolder}
-      <Grid gridTemplateColumns={"1fr 2fr"} height={"100vh"} width={"100vw"}>
+      <Grid
+        gridTemplateColumns={["1fr", "1fr 2fr"]}
+        height={"100vh"}
+        width={"100vw"}
+      >
         <Flex justifyContent={"center"} alignItems={"center"} px={4}>
           <Box width={320}>
             <Box mb={4}>
@@ -100,7 +104,7 @@ export default function Signin() {
             </Text>
           </Box>
         </Flex>
-        <Box bg={"grey"}></Box>
+        <Box display={["none", "block"]} bg={"grey"}></Box>
       </Grid>
     </>
   );
