@@ -7,6 +7,7 @@ import { NAVIGATIONS } from "../const/navigations";
 import { Box } from "./shared/Box";
 import { useRouter } from "next/router";
 import { Text } from "./shared/Text";
+import { BsChevronCompactLeft } from "react-icons/bs";
 
 const { Header, Content, Footer, Sider } = AntLayout;
 
@@ -34,7 +35,18 @@ const Layout: FC<ILayout> = ({ children, title, journey }) => {
 
   return (
     <AntLayout style={{ height: "100vh" }}>
-      <Sider breakpoint="lg" collapsedWidth="0">
+      <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
+        trigger={
+          <Flex justifyContent={"center"} alignItems={"center"}>
+            <BsChevronCompactLeft />
+          </Flex>
+        }
+        zeroWidthTriggerStyle={{
+          top: "12px",
+        }}
+      >
         <Flex
           flexDirection={"column"}
           justifyContent={"space-between"}
