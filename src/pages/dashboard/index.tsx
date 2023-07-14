@@ -15,6 +15,8 @@ import { Text } from "../../components/shared/Text";
 import { Grid } from "../../components/shared/Grid";
 import { Box } from "../../components/shared/Box";
 import { Card } from "../../components/shared/Card";
+import { message } from "antd";
+import { CardSkeleton } from "../../components/products/CardSkeleton";
 
 interface IResponse {
   products: IProduct[];
@@ -32,10 +34,13 @@ interface IProduct {
 
 const Dashboard = () => {
   const apiUrl = process.env.NEXT_PUBLIC_API;
+  const [messageApi, contextHolder] = message.useMessage();
+
   const {
     fire,
     data: fetchData,
     loading,
+    status,
   } = useFetch<IResponse>(
     `${apiUrl}/products?limit=0&skip=0&select=title,stock,category`
   );
@@ -44,12 +49,25 @@ const Dashboard = () => {
     fire: fetchProductCategory,
     data: productCategoryData,
     loading: productCategoryLoading,
+    status: productCategoryStatus,
   } = useFetch<string[]>(`${apiUrl}/products/categories`);
+
+  const errorToast = (message?: string) => {
+    messageApi.open({
+      type: "error",
+      content: message || "Something went wrong",
+    });
+  };
 
   useEffect(() => {
     fire();
     fetchProductCategory();
   }, []);
+
+  useEffect(() => {
+    status === "error" && errorToast();
+    productCategoryStatus === "error" && errorToast();
+  }, [status, productCategoryStatus]);
 
   ChartJS.register(
     CategoryScale,
@@ -60,69 +78,66 @@ const Dashboard = () => {
     Legend
   );
 
-  const labels = fetchData?.products.map((product) => product.title);
-
-  const dataSource = {
-    // labels,
-    datasets: [
-      {
-        data: fetchData?.products.map((product) => ({
-          x: product.title,
-          y: product.stock,
-        })),
-      },
-    ],
-  };
-
   const randomizeColor = (num: number) =>
     `#${Math.floor(Math.random() * (16777216 + num)).toString(16)}`;
 
   return (
-    <Layout title="Dashboard" journey={[{ title: "Dashboard" }]}>
-      {loading || productCategoryLoading ? (
-        <Text>Loading...</Text>
-      ) : (
+    <>
+      {contextHolder}
+      <Layout title="Dashboard" journey={[{ title: "Dashboard" }]}>
         <Grid
           gridTemplateColumns={["1fr", "1fr 1fr", "1fr 1fr 1fr"]}
           gridGap={3}
         >
-          {productCategoryData?.map((category, idx) => (
-            <Box key={category}>
-              <Card>
-                <Bar
-                  options={{
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        display: false,
-                      },
-                      title: {
-                        display: true,
-                        text: category.toUpperCase(),
-                      },
-                    },
-                  }}
-                  data={{
-                    datasets: [
-                      {
-                        label: category,
-                        data: fetchData?.products
-                          .filter((product) => product.category === category)
-                          .map((product) => ({
-                            x: product.title,
-                            y: product.stock,
-                          })),
-                        backgroundColor: randomizeColor(idx),
-                      },
-                    ],
-                  }}
-                />
-              </Card>
-            </Box>
-          ))}
+          {loading || productCategoryLoading ? (
+            <>
+              {Array.from(Array(10).keys()).map((val) => (
+                <CardSkeleton key={val} />
+              ))}
+            </>
+          ) : (
+            <>
+              {productCategoryData?.map((category, idx) => (
+                <Box key={category}>
+                  <Card>
+                    <Bar
+                      options={{
+                        responsive: true,
+                        plugins: {
+                          legend: {
+                            display: false,
+                          },
+                          title: {
+                            display: true,
+                            text: category.toUpperCase(),
+                          },
+                        },
+                      }}
+                      data={{
+                        datasets: [
+                          {
+                            label: category,
+                            data: fetchData?.products
+                              .filter(
+                                (product) => product.category === category
+                              )
+                              .map((product) => ({
+                                x: product.title,
+                                y: product.stock,
+                              })),
+                            backgroundColor: randomizeColor(idx),
+                          },
+                        ],
+                      }}
+                    />
+                  </Card>
+                </Box>
+              ))}
+            </>
+          )}
         </Grid>
-      )}
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

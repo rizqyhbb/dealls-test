@@ -33,40 +33,48 @@ const ProductCards: FC<OwnProps> = () => {
   }
   return (
     <>
-      {data.products.slice(firstRow, lastRow).map((product) => (
-        <Card key={product.id}>
-          <Tag color="success" bordered={false}>
-            ID {product.id}
-          </Tag>
-          <Flex justifyContent={"space-between"} alignItems={"center"}>
-            <Text fontWeight={"bold"} fontSize={2}>
-              {product.title}
-            </Text>
-            <Text color={"grey"}>Stock: {product.stock}</Text>
-          </Flex>
-          <Flex justifyContent={"space-between"} alignItems={"center"}>
-            <Text>{product.brand}</Text>
-            <Tag bordered={false} color="blue" style={{ marginRight: "0px" }}>
-              {product.category}
+      {data.products.length > 0 ? (
+        data.products.slice(firstRow, lastRow).map((product) => (
+          <Card key={product.id}>
+            <Tag color="success" bordered={false}>
+              ID {product.id}
             </Tag>
-          </Flex>
-          <Flex alignItems={"center"} justifyContent={"space-between"}>
-            <Flex alignItems={"center"}>
-              <TbStarFilled color="yellow" size={20} />
-              <Text fontWeight={"bold"}>{product.rating}</Text>
+            <Flex justifyContent={"space-between"} alignItems={"center"}>
+              <Text fontWeight={"bold"} fontSize={2}>
+                {product.title}
+              </Text>
+              <Text color={"grey"}>Stock: {product.stock}</Text>
             </Flex>
-            <Text fontWeight={"bold"}>${product.price}.00</Text>
-          </Flex>
-          <Flex alignItems={"center"} justifyContent={"end"}>
-            <TbDiscount2 color="green" size={20} />
-            <Text color={"green"} fontWeight={"bold"}>
-              {product.discountPercentage}%
-            </Text>
-          </Flex>
-          <hr />
-          <Text>{product.description}</Text>
-        </Card>
-      ))}
+            <Flex justifyContent={"space-between"} alignItems={"center"}>
+              <Text>{product.brand}</Text>
+              <Tag bordered={false} color="blue" style={{ marginRight: "0px" }}>
+                {product.category}
+              </Tag>
+            </Flex>
+            <Flex alignItems={"center"} justifyContent={"space-between"}>
+              <Flex alignItems={"center"}>
+                <TbStarFilled color="yellow" size={20} />
+                <Text fontWeight={"bold"}>{product.rating}</Text>
+              </Flex>
+              <Text fontWeight={"bold"}>${product.price}.00</Text>
+            </Flex>
+            <Flex alignItems={"center"} justifyContent={"end"}>
+              <TbDiscount2 color="green" size={20} />
+              <Text color={"green"} fontWeight={"bold"}>
+                {product.discountPercentage}%
+              </Text>
+            </Flex>
+            <hr />
+            <Text>{product.description}</Text>
+          </Card>
+        ))
+      ) : (
+        <Flex justifyContent={"center"} mt={4}>
+          <Text fontStyle={"italic"} color={"grey"}>
+            No result found
+          </Text>
+        </Flex>
+      )}
       <Flex justifyContent={"center"} alignItems={"center"}>
         <Pagination
           onPageChange={(page) => {

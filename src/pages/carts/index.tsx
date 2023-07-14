@@ -6,6 +6,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
 import { NextPageContext } from "next";
+import { message } from "antd";
 
 export interface ICarts {
   carts: ICart[];
@@ -41,11 +42,21 @@ export default function Carts({ query }: any) {
   const skip = limit * (page - 1);
   const apiUrl = process.env.NEXT_PUBLIC_API;
 
+  const [messageApi, contextHolder] = message.useMessage();
+
   const {
     fire: getCarts,
     data,
     loading,
+    status,
   } = useFetch<ICarts>(`${apiUrl}/carts?limit=${limit}&skip=${skip}`);
+
+  const errorToast = (message?: string) => {
+    messageApi.open({
+      type: "error",
+      content: message || "Something went wrong",
+    });
+  };
 
   useEffect(() => {
     if (query.page) return;
@@ -59,10 +70,17 @@ export default function Carts({ query }: any) {
     getCarts();
   }, [page]);
 
+  useEffect(() => {
+    status === "error" && errorToast();
+  }, [status]);
+
   return (
-    <Layout title="Cart List" journey={[{ title: "Carts" }]}>
-      <TableComponent data={data!} loading={loading} />
-    </Layout>
+    <>
+      {contextHolder}
+      <Layout title="Cart List" journey={[{ title: "Carts" }]}>
+        <TableComponent data={data!} loading={loading} />
+      </Layout>
+    </>
   );
 }
 
