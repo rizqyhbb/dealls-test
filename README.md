@@ -1,8 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is part of Dealls Frontend test which the requirement can be found [here](https://drive.google.com/file/d/1sLHVcODVplQBWHihxOT4JN68TE39xWsQ/view?usp=sharing)
 
 ## Getting Started
 
-First, run the development server:
+This project is build NextJs 13 with Typescript and pinned with volta as node manager. If you are using nvm or any other node version manager or just a nodeJs, please visit `package.json` and search for `volta` to see the version of node that are used.
+
+To run the project in development mode simply just isntall all the dependencies
+
+```bash
+yarn
+# or
+npm install
+```
+
+After installing all dependency, just run the project
 
 ```bash
 npm run dev
@@ -12,23 +22,23 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Stacks
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Stack that I'am using and the reason to choose
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+1. [NextJs 13 (page router)](https://nextjs.org/)
+2. [Antd](https://ant.design/)
+3. [Emotion](https://emotion.sh/)
+4. [Styled-System](https://styled-system.com/)
+5. [chartJs](https://react-chartjs-2.js.org/)
+6. [jotai](https://jotai.org/)
 
-## Learn More
+First of all, NextJs is one of the requirement and most popular framework, so why choosing page router rather than app router? It is simply becase lot of comment from community that I read and heard that it is still lot of performance bugs in production.
 
-To learn more about Next.js, take a look at the following resources:
+Antd is one of UI enterprise level UI library that is well known, easy to use, lot of components and the functionality of the property is quit as much as I need. To powerup the styling for UI library and do some common styling like padding, margin, flex, grid etc I choose emotion combined with styled-system as the utility.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Jotai is something I just try and learn. Why choosing jotai as state management instead of redux ? because it is minimalist, the setup is super easy and yeah just like using useState
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Things will be better if
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. The API provides more options like filtering, search, sorting in a single API as it return same data structure
