@@ -14,6 +14,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { Text } from "../../components/shared/Text";
 import { Grid } from "../../components/shared/Grid";
 import { Box } from "../../components/shared/Box";
+import { Card } from "../../components/shared/Card";
 
 interface IResponse {
   products: IProduct[];
@@ -77,7 +78,7 @@ const Dashboard = () => {
     `#${Math.floor(Math.random() * (16777216 + num)).toString(16)}`;
 
   return (
-    <Layout>
+    <Layout title="Dashboard">
       {loading || productCategoryLoading ? (
         <Text>Loading...</Text>
       ) : (
@@ -86,35 +87,37 @@ const Dashboard = () => {
           gridGap={3}
         >
           {productCategoryData?.map((category, idx) => (
-            <Box key={category} border={"1px solid blue"} borderRadius={8}>
-              <Bar
-                options={{
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      display: false,
+            <Box key={category}>
+              <Card>
+                <Bar
+                  options={{
+                    responsive: true,
+                    plugins: {
+                      legend: {
+                        display: false,
+                      },
+                      title: {
+                        display: true,
+                        text: category.toUpperCase(),
+                      },
                     },
-                    title: {
-                      display: true,
-                      text: category.toUpperCase(),
-                    },
-                  },
-                }}
-                data={{
-                  datasets: [
-                    {
-                      label: category,
-                      data: fetchData?.products
-                        .filter((product) => product.category === category)
-                        .map((product) => ({
-                          x: product.title,
-                          y: product.stock,
-                        })),
-                      backgroundColor: randomizeColor(idx),
-                    },
-                  ],
-                }}
-              />
+                  }}
+                  data={{
+                    datasets: [
+                      {
+                        label: category,
+                        data: fetchData?.products
+                          .filter((product) => product.category === category)
+                          .map((product) => ({
+                            x: product.title,
+                            y: product.stock,
+                          })),
+                        backgroundColor: randomizeColor(idx),
+                      },
+                    ],
+                  }}
+                />
+              </Card>
             </Box>
           ))}
         </Grid>

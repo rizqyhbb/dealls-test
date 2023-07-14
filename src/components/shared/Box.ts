@@ -12,7 +12,7 @@ import {
   space,
 } from "styled-system";
 
-interface IBox
+export interface IBox
   extends ColorProps,
     SpaceProps,
     LayoutProps,

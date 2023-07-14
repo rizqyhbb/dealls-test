@@ -1,8 +1,9 @@
 import React from "react";
 import { Box } from "../shared/Box";
-import { Button, Table } from "antd";
+import { Button, Table, Tag } from "antd";
 import { useRouter } from "next/router";
-import { ICarts } from "../../pages/carts";
+import { ICart, ICarts } from "../../pages/carts";
+import { Text } from "../shared/Text";
 
 export const TableComponent = ({
   data,
@@ -15,13 +16,17 @@ export const TableComponent = ({
   const columns = [
     {
       title: "Id",
-      dataIndex: "id",
       key: "id",
-    },
-    {
-      title: "User Id",
-      dataIndex: "userId",
-      key: "id",
+      render: (val: ICart) => {
+        return (
+          <Box>
+            <Text fontWeight={"bold"}>#{val.id}</Text>
+            <Tag color="cyan" bordered={false}>
+              user id: {val.userId}
+            </Tag>
+          </Box>
+        );
+      },
     },
     {
       title: "Products",
@@ -52,7 +57,7 @@ export const TableComponent = ({
         <Button
           onClick={() => router.push({ pathname: `${router.pathname}/${id}` })}
         >
-          See detail
+          Detail
         </Button>
       ),
     },

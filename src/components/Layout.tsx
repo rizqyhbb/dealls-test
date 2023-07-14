@@ -55,14 +55,20 @@ const Layout: FC<{ children: ReactNode; title?: string }> = ({
       </Sider>
       <AntLayout>
         <Header style={{ padding: 0, background: colorBgContainer }}></Header>
-        <Content style={{ margin: "24px 16px 0", overflow: "auto" }}>
+        <Content
+          style={{
+            margin: "24px 16px 0",
+            overflow: "auto",
+            backgroundColor: "#f5f5f5",
+          }}
+        >
           <Text color="black" fontSize={3} fontWeight={"bold"}>
             {title}
           </Text>
           <Box
             p={24}
             minHeight={"100%"}
-            bg={colorBgContainer}
+            // bg={colorBgContainer}
             overflowX={"auto"}
           >
             {children}
