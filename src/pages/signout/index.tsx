@@ -20,6 +20,7 @@ const Signout = () => {
   };
   useEffect(() => {
     fire({
+      baseURL: `${router.basePath}`,
       method: "POST",
     });
   }, []);
@@ -34,6 +35,7 @@ const Signout = () => {
 
   return (
     <>
+      {contextHolder}
       <Flex
         width={"100vw"}
         height={"100vh"}

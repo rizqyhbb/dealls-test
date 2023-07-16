@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "../helper/axios";
+import { AxiosError, AxiosRequestConfig } from "axios";
 
 interface FetchOptions {
   method?: string;
@@ -11,12 +13,12 @@ interface FetchResult<T> {
   data: T | null;
   error: any;
   status: "idle" | "loading" | "success" | "error";
-  fire: (options?: FetchOptions) => Promise<void>;
+  fire: (options?: AxiosRequestConfig) => Promise<void>;
 }
 
 export const useFetch = <T>(
   url: string,
-  options: FetchOptions = {}
+  options: AxiosRequestConfig = {}
 ): FetchResult<T> => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T | null>(null);
@@ -25,7 +27,7 @@ export const useFetch = <T>(
     "idle" | "loading" | "success" | "error"
   >("idle");
 
-  const fire = async (fireOptions?: FetchOptions): Promise<void> => {
+  const fire = async (fireOptions?: AxiosRequestConfig): Promise<void> => {
     const fetchOptions = {
       ...options,
       ...fireOptions,
@@ -34,18 +36,17 @@ export const useFetch = <T>(
     try {
       setStatus("idle");
       setLoading(true);
-      const response = await fetch(url, fetchOptions);
-      const jsonData: T = await response.json();
+      const response = await axios(url, fetchOptions);
 
-      if (response.ok) {
-        setData(jsonData);
+      if (response.status === 200) {
+        setData(response.data);
         setStatus("success");
       } else {
-        setError(jsonData);
+        setError(response.data);
         setStatus("error");
       }
-    } catch (error) {
-      setError(error);
+    } catch (error: unknown) {
+      setError((error as AxiosError).response?.data);
       setStatus("error");
     } finally {
       setLoading(false);

@@ -22,7 +22,11 @@ export default function Signin() {
   }>("/api/auth");
 
   const handleSubmit = (val: FormData) => {
-    fire({ method: "POST", body: JSON.stringify(val) });
+    fire({
+      baseURL: `${router.basePath}`,
+      method: "POST",
+      data: val,
+    });
   };
 
   const errorToast = (message?: string) => {
@@ -45,7 +49,6 @@ export default function Signin() {
 
   useEffect(() => {
     if (data?.message === "authenticated") {
-      localStorage.setItem("auth", "authenticated");
       successToast("Authenticated!");
       router.push("/dashboard");
       return;

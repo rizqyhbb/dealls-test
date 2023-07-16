@@ -13,7 +13,7 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === "POST") {
-    const { email, password } = JSON.parse(req.body);
+    const { email, password } = req.body;
 
     if (email === "admin@mail.com" && password === "admin") {
       setTimeout(() => {
