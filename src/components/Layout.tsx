@@ -34,7 +34,7 @@ const Layout: FC<ILayout> = ({ children, title, journey }) => {
   const currentPath = router.pathname.split("/")[1].split("?")[0];
 
   return (
-    <AntLayout style={{ height: "100vh" }}>
+    <AntLayout style={{ height: "100vh" }} hasSider>
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
