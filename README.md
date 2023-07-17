@@ -12,6 +12,11 @@ yarn
 npm install
 ```
 
+Add `.env.local` on the root of the project:
+```
+NEXT_PUBLIC_API=https://dummyjson.com
+```
+
 After installing all dependency, just run the project
 
 ```bash
