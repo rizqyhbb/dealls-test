@@ -10,6 +10,7 @@ export function middleware(req: NextRequest) {
       pathname === "/" ||
       pathnameStartWith("/dashboard") ||
       pathnameStartWith("/carts") ||
+      pathnameStartWith("/products") ||
       pathnameStartWith("/signout")
     ) {
       return NextResponse.redirect(new URL("/signin", req.url));

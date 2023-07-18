@@ -1,4 +1,8 @@
-This is part of Dealls Frontend test which the requirement can be found [here](https://drive.google.com/file/d/1sLHVcODVplQBWHihxOT4JN68TE39xWsQ/view?usp=sharing)
+This is part of Dealls Frontend test which the requirement can be found [here](https://drive.google.com/file/d/1sLHVcODVplQBWHihxOT4JN68TE39xWsQ/view?usp=sharing). This app is deployed on [vercel](https://vercel.com) and can be accessed on:
+
+```
+https://dealls-test.vercel.app
+```
 
 ## Getting Started
 
@@ -13,6 +17,7 @@ npm install
 ```
 
 Add `.env.local` on the root of the project:
+
 ```
 NEXT_PUBLIC_API=https://dummyjson.com
 ```
