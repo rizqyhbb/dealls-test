@@ -10,7 +10,8 @@ import ProductCards from "../../components/products/ProductCards";
 import { useAtom } from "jotai";
 import { IProduct, productsAtom } from "../../context/productContext";
 import axios, { AxiosError } from "axios";
-import { NextPageContext } from "next";
+import { GetServerSideProps, NextPageContext } from "next";
+import withAuth from "../../helper/withAuth";
 
 export interface IBrands {
   products: IProductOnBrands[];
@@ -140,8 +141,8 @@ export default function Products({ query }: any) {
   );
 }
 
-Products.getInitialProps = async (ctx: NextPageContext) => {
+export const getServerSideProps: GetServerSideProps = withAuth(async (ctx) => {
   return {
-    query: ctx.query,
+    props: { query: ctx.query },
   };
-};
+});

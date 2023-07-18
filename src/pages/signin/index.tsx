@@ -7,6 +7,8 @@ import { Text } from "../../components/shared/Text";
 import { useFetch } from "../../hooks/useFetch";
 import { Button, Form, Input, message } from "antd";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import withAuth from "../../helper/withAuth";
 
 interface FormData {
   name: string;
@@ -112,3 +114,9 @@ export default function Signin() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = withAuth(async (ctx) => {
+  return {
+    props: {},
+  };
+});

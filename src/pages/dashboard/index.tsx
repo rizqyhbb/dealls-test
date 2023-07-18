@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Layout from "../../components/Layout";
+import * as cookie from "cookie";
 import {
   Chart as ChartJS,
   Tooltip,
@@ -17,6 +18,8 @@ import { Box } from "../../components/shared/Box";
 import { Card } from "../../components/shared/Card";
 import { message } from "antd";
 import { CardSkeleton } from "../../components/products/CardSkeleton";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import withAuth from "../../helper/withAuth";
 
 interface IResponse {
   products: IProduct[];
@@ -142,3 +145,9 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+export const getServerSideProps: GetServerSideProps = withAuth(async () => {
+  return {
+    props: {},
+  };
+});

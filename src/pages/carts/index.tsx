@@ -5,8 +5,9 @@ import { TableComponent } from "../../components/carts/TableComponent";
 import { useFetch } from "../../hooks/useFetch";
 import { useRouter } from "next/router";
 import { useSearchParams } from "next/navigation";
-import { NextPageContext } from "next";
+import { GetServerSideProps, NextPageContext } from "next";
 import { message } from "antd";
+import withAuth from "../../helper/withAuth";
 
 export interface ICarts {
   carts: ICart[];
@@ -84,6 +85,10 @@ export default function Carts({ query }: any) {
   );
 }
 
-Carts.getInitialProps = async (ctx: NextPageContext) => {
-  return { query: ctx.query };
-};
+export const getServerSideProps: GetServerSideProps = withAuth(async (ctx) => {
+  return {
+    props: {
+      query: ctx.query,
+    },
+  };
+});

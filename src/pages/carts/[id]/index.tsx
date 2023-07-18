@@ -1,4 +1,4 @@
-import { NextPageContext } from "next";
+import { GetServerSideProps, NextPageContext } from "next";
 import React, { useEffect } from "react";
 import Layout from "../../../components/Layout";
 import { Box } from "../../../components/shared/Box";
@@ -10,6 +10,7 @@ import ItemCards from "../../../components/carts/ItemCards";
 import TotalCard from "../../../components/carts/TotalCard";
 import { CardSkeleton } from "../../../components/products/CardSkeleton";
 import { message } from "antd";
+import withAuth from "../../../helper/withAuth";
 
 export interface ICartData {
   id: number;
@@ -81,6 +82,8 @@ export default function DetaiLCart({ query }: any) {
   );
 }
 
-DetaiLCart.getInitialProps = async (ctx: NextPageContext) => {
-  return { query: ctx.query };
-};
+export const getServerSideProps: GetServerSideProps = withAuth(async (ctx) => {
+  return {
+    props: { query: ctx.query },
+  };
+});
